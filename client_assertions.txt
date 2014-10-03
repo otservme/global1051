@@ -1,0 +1,28 @@
+----- 25/06/2014 20:53:34 - Uos Corleone (187.84.76.70) -----
+Debug Assertion 10.41 Objects.cpp 581
+Wed Jun 25 16:40:09 2014
+Graphic Engine: DirectX9 (2)
+Operating System: Windows 7 Ultimate Edition 32 Bit in BRA
+Processor: Dual Core Intel Pentium E5700 @ 3
+Video Card: Intel (R) G41 E
+Last Packet Types: 131 109 180 131 160 160 134 103 109 109
+Last Packet: 109 144 129 199 123 015 001 144 129 200 123 015 103 000 000 154
+Player Position: [33168,31688,15]
+Player Name: Uos Corleone (War Global)
+Player Action: 048 046 048 046 048 046 048 058 055 049 055 050
+Player.cpp 343: exception occurred, reason:
+Player.cpp 447: exception occurred, reason:
+Control.cpp 2053: exception occurred (MessageType: 0 MaW: 9DE6B8 MoW: 0), reason:
+Control.cpp 2048: exception occurred, reason:
+Control.cpp 540: exception occurred (Force?1:0 = 0), reason:
+MainWindow.cpp 128: exception occurred (Surface = 1), reason:
+GUI.cpp 1704: exception occurred (Surface = 1), reason:
+MapWindow.cpp 961: exception occurred (Surface = 1), reason:
+MapWindow.cpp 547: exception occurred (Obj = 727), reason:
+MapWindow.cpp 1292: exception occurred (posx = 64) (posy = 298), reason:
+MapWindow.cpp 1072: exception occurred, reason:
+MapWindow.cpp 1041: exception occurred (Creature->OutfitData[0] = 20) (Creature->CreatureID = 268435553), reason:
+Objects.cpp 584: exception occurred (Type = 20) (Flag = 25), reason:
+Objects.cpp 581: assertion failed (Type = 20) (ObjectProperties->high() = 21217), reason:
+In(Type,ObjectProperties->low(),ObjectProperties->high())
+Comment: 
