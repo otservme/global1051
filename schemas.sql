@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.10.1deb1
+-- version 4.2.8
 -- http://www.phpmyadmin.net
 --
--- Servidor: localhost
--- Tempo de Geração: 26/06/2014 às 08h43min
--- Versão do Servidor: 5.5.37
--- Versão do PHP: 5.3.10-1ubuntu3.11
+-- Host: localhost
+-- Generation Time: Sep 02, 2014 at 06:47 AM
+-- Server version: 5.5.37-0ubuntu0.13.10.1
+-- PHP Version: 5.5.3-1ubuntu2.6
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -17,17 +17,17 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Banco de Dados: `Absolute`
+-- Database: `global1041`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `accounts`
+-- Table structure for table `accounts`
 --
 
 CREATE TABLE IF NOT EXISTS `accounts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `name` varchar(32) NOT NULL,
   `password` char(40) NOT NULL,
   `type` int(11) NOT NULL DEFAULT '1',
@@ -47,22 +47,20 @@ CREATE TABLE IF NOT EXISTS `accounts` (
   `create_date` int(11) NOT NULL DEFAULT '0',
   `create_ip` int(11) NOT NULL DEFAULT '0',
   `last_post` int(11) NOT NULL DEFAULT '0',
-  `flag` varchar(80) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=448 ;
+  `flag` varchar(80) NOT NULL DEFAULT ''
+) ENGINE=InnoDB AUTO_INCREMENT=449 DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `accounts`
+-- Dumping data for table `accounts`
 --
 
 INSERT INTO `accounts` (`id`, `name`, `password`, `type`, `premdays`, `lastday`, `email`, `creation`, `key`, `email_new`, `email_new_time`, `rlname`, `location`, `page_access`, `email_code`, `next_email`, `premium_points`, `create_date`, `create_ip`, `last_post`, `flag`) VALUES
-(1, '1', 'a5238bb46cfdeecc2b172e595ad2f76da5fa056a', 1, 0, 0, '70428@gmail.com', 1402322190, '', '', 0, '', '', 3, '', 0, 0, 0, 2147483647, 0, 'unknown');
+(1, '1', 'e0f68134d29dc326d115de4c8fab8700a3c4b002', 1, 0, 0, '70428@gmail.com', 1402322190, '', '', 0, '', '', 3, '', 0, 0, 0, 2147483647, 0, 'unknown');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `account_bans`
+-- Table structure for table `account_bans`
 --
 
 CREATE TABLE IF NOT EXISTS `account_bans` (
@@ -70,33 +68,28 @@ CREATE TABLE IF NOT EXISTS `account_bans` (
   `reason` varchar(255) NOT NULL,
   `banned_at` bigint(20) NOT NULL,
   `expires_at` bigint(20) NOT NULL,
-  `banned_by` int(11) NOT NULL,
-  PRIMARY KEY (`account_id`),
-  KEY `banned_by` (`banned_by`)
+  `banned_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `account_ban_history`
+-- Table structure for table `account_ban_history`
 --
 
 CREATE TABLE IF NOT EXISTS `account_ban_history` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`id` int(10) unsigned NOT NULL,
   `account_id` int(11) NOT NULL,
   `reason` varchar(255) NOT NULL,
   `banned_at` bigint(20) NOT NULL,
   `expired_at` bigint(20) NOT NULL,
-  `banned_by` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `account_id` (`account_id`),
-  KEY `banned_by` (`banned_by`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `banned_by` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `account_viplist`
+-- Table structure for table `account_viplist`
 --
 
 CREATE TABLE IF NOT EXISTS `account_viplist` (
@@ -104,19 +97,17 @@ CREATE TABLE IF NOT EXISTS `account_viplist` (
   `player_id` int(11) NOT NULL COMMENT 'id of target player of viplist entry',
   `description` varchar(128) NOT NULL DEFAULT '',
   `icon` tinyint(2) unsigned NOT NULL DEFAULT '0',
-  `notify` tinyint(1) NOT NULL DEFAULT '0',
-  UNIQUE KEY `account_player_index` (`account_id`,`player_id`),
-  KEY `player_id` (`player_id`)
+  `notify` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `guilds`
+-- Table structure for table `guilds`
 --
 
 CREATE TABLE IF NOT EXISTS `guilds` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `ownerid` int(11) NOT NULL,
   `creationdata` int(11) NOT NULL,
@@ -124,16 +115,12 @@ CREATE TABLE IF NOT EXISTS `guilds` (
   `description` text NOT NULL,
   `guild_logo` mediumblob,
   `create_ip` int(11) NOT NULL DEFAULT '0',
-  `balance` bigint(20) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
-  UNIQUE KEY `ownerid` (`ownerid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+  `balance` bigint(20) unsigned NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
--- Gatilhos `guilds`
+-- Triggers `guilds`
 --
-DROP TRIGGER IF EXISTS `oncreate_guilds`;
 DELIMITER //
 CREATE TRIGGER `oncreate_guilds` AFTER INSERT ON `guilds`
  FOR EACH ROW BEGIN
@@ -147,93 +134,81 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `guildwar_kills`
+-- Table structure for table `guildwar_kills`
 --
 
 CREATE TABLE IF NOT EXISTS `guildwar_kills` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `killer` varchar(50) NOT NULL,
   `target` varchar(50) NOT NULL,
   `killerguild` int(11) NOT NULL DEFAULT '0',
   `targetguild` int(11) NOT NULL DEFAULT '0',
   `warid` int(11) NOT NULL DEFAULT '0',
-  `time` bigint(15) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `warid` (`warid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `guild_invites`
---
-
-CREATE TABLE IF NOT EXISTS `guild_invites` (
-  `player_id` int(11) NOT NULL DEFAULT '0',
-  `guild_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`player_id`,`guild_id`),
-  KEY `guild_id` (`guild_id`)
+  `time` bigint(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `guild_membership`
+-- Table structure for table `guild_invites`
+--
+
+CREATE TABLE IF NOT EXISTS `guild_invites` (
+  `player_id` int(11) NOT NULL DEFAULT '0',
+  `guild_id` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `guild_membership`
 --
 
 CREATE TABLE IF NOT EXISTS `guild_membership` (
   `player_id` int(11) NOT NULL,
   `guild_id` int(11) NOT NULL,
   `rank_id` int(11) NOT NULL,
-  `nick` varchar(15) NOT NULL DEFAULT '',
-  PRIMARY KEY (`player_id`),
-  KEY `guild_id` (`guild_id`),
-  KEY `rank_id` (`rank_id`)
+  `nick` varchar(15) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `guild_ranks`
+-- Table structure for table `guild_ranks`
 --
 
 CREATE TABLE IF NOT EXISTS `guild_ranks` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `guild_id` int(11) NOT NULL COMMENT 'guild',
   `name` varchar(255) NOT NULL COMMENT 'rank name',
-  `level` int(11) NOT NULL COMMENT 'rank level - leader, vice, member, maybe something else',
-  PRIMARY KEY (`id`),
-  KEY `guild_id` (`guild_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
+  `level` int(11) NOT NULL COMMENT 'rank level - leader, vice, member, maybe something else'
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `guild_wars`
+-- Table structure for table `guild_wars`
 --
 
 CREATE TABLE IF NOT EXISTS `guild_wars` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `guild1` int(11) NOT NULL DEFAULT '0',
   `guild2` int(11) NOT NULL DEFAULT '0',
   `name1` varchar(255) NOT NULL,
   `name2` varchar(255) NOT NULL,
   `status` tinyint(2) NOT NULL DEFAULT '0',
   `started` bigint(15) NOT NULL DEFAULT '0',
-  `ended` bigint(15) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `guild1` (`guild1`),
-  KEY `guild2` (`guild2`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `ended` bigint(15) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `houses`
+-- Table structure for table `houses`
 --
 
 CREATE TABLE IF NOT EXISTS `houses` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `owner` int(11) NOT NULL,
   `paid` int(10) unsigned NOT NULL DEFAULT '0',
   `warnings` int(11) NOT NULL DEFAULT '0',
@@ -245,14 +220,11 @@ CREATE TABLE IF NOT EXISTS `houses` (
   `last_bid` int(11) NOT NULL DEFAULT '0',
   `highest_bidder` int(11) NOT NULL DEFAULT '0',
   `size` int(11) NOT NULL DEFAULT '0',
-  `beds` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `owner` (`owner`),
-  KEY `town_id` (`town_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2423 ;
+  `beds` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=2423 DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `houses`
+-- Dumping data for table `houses`
 --
 
 INSERT INTO `houses` (`id`, `owner`, `paid`, `warnings`, `name`, `rent`, `town_id`, `bid`, `bid_end`, `last_bid`, `highest_bidder`, `size`, `beds`) VALUES
@@ -1266,18 +1238,17 @@ INSERT INTO `houses` (`id`, `owner`, `paid`, `warnings`, `name`, `rent`, `town_i
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `house_lists`
+-- Table structure for table `house_lists`
 --
 
 CREATE TABLE IF NOT EXISTS `house_lists` (
   `house_id` int(11) NOT NULL,
   `listid` int(11) NOT NULL,
-  `list` text NOT NULL,
-  KEY `house_id` (`house_id`)
+  `list` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `house_lists`
+-- Dumping data for table `house_lists`
 --
 
 INSERT INTO `house_lists` (`house_id`, `listid`, `list`) VALUES
@@ -1297,7 +1268,7 @@ INSERT INTO `house_lists` (`house_id`, `listid`, `list`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `ip_bans`
+-- Table structure for table `ip_bans`
 --
 
 CREATE TABLE IF NOT EXISTS `ip_bans` (
@@ -1305,19 +1276,17 @@ CREATE TABLE IF NOT EXISTS `ip_bans` (
   `reason` varchar(255) NOT NULL,
   `banned_at` bigint(20) NOT NULL,
   `expires_at` bigint(20) NOT NULL,
-  `banned_by` int(11) NOT NULL,
-  PRIMARY KEY (`ip`),
-  KEY `banned_by` (`banned_by`)
+  `banned_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `market_history`
+-- Table structure for table `market_history`
 --
 
 CREATE TABLE IF NOT EXISTS `market_history` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`id` int(10) unsigned NOT NULL,
   `player_id` int(11) NOT NULL,
   `sale` tinyint(1) NOT NULL DEFAULT '0',
   `itemtype` int(10) unsigned NOT NULL,
@@ -1325,40 +1294,34 @@ CREATE TABLE IF NOT EXISTS `market_history` (
   `price` int(10) unsigned NOT NULL DEFAULT '0',
   `expires_at` bigint(20) unsigned NOT NULL,
   `inserted` bigint(20) unsigned NOT NULL,
-  `state` tinyint(1) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `player_id` (`player_id`,`sale`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+  `state` tinyint(1) unsigned NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `market_offers`
+-- Table structure for table `market_offers`
 --
 
 CREATE TABLE IF NOT EXISTS `market_offers` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`id` int(10) unsigned NOT NULL,
   `player_id` int(11) NOT NULL,
   `sale` tinyint(1) NOT NULL DEFAULT '0',
   `itemtype` int(10) unsigned NOT NULL,
   `amount` smallint(5) unsigned NOT NULL,
   `created` bigint(20) unsigned NOT NULL,
   `anonymous` tinyint(1) NOT NULL DEFAULT '0',
-  `price` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `sale` (`sale`,`itemtype`),
-  KEY `created` (`created`),
-  KEY `player_id` (`player_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+  `price` int(10) unsigned NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `players`
+-- Table structure for table `players`
 --
 
 CREATE TABLE IF NOT EXISTS `players` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `group_id` int(11) NOT NULL DEFAULT '1',
   `account_id` int(11) NOT NULL DEFAULT '0',
@@ -1420,19 +1383,15 @@ CREATE TABLE IF NOT EXISTS `players` (
   `hide_char` int(11) NOT NULL DEFAULT '0',
   `cast` tinyint(1) NOT NULL DEFAULT '0',
   `castViewers` tinyint(1) NOT NULL DEFAULT '0',
-  `castDescription` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`),
-  KEY `account_id` (`account_id`),
-  KEY `vocation` (`vocation`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=520 ;
+  `castDescription` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=524 DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `players`
+-- Dumping data for table `players`
 --
 
 INSERT INTO `players` (`id`, `name`, `group_id`, `account_id`, `level`, `vocation`, `health`, `healthmax`, `experience`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `lookaddons`, `maglevel`, `mana`, `manamax`, `manaspent`, `soul`, `town_id`, `posx`, `posy`, `posz`, `conditions`, `cap`, `sex`, `lastlogin`, `lastip`, `save`, `skull`, `skulltime`, `lastlogout`, `blessings`, `onlinetime`, `deletion`, `balance`, `offlinetraining_time`, `offlinetraining_skill`, `stamina`, `skill_fist`, `skill_fist_tries`, `skill_club`, `skill_club_tries`, `skill_sword`, `skill_sword_tries`, `skill_axe`, `skill_axe_tries`, `skill_dist`, `skill_dist_tries`, `skill_shielding`, `skill_shielding_tries`, `skill_fishing`, `skill_fishing_tries`, `deleted`, `description`, `comment`, `create_ip`, `create_date`, `hide_char`, `cast`, `castViewers`, `castDescription`) VALUES
-(1, 'Account Manager', 1, 1, 8, 0, 185, 185, 4200, 44, 98, 15, 76, 128, 0, 0, 35, 35, 0, 100, 1, 0, 0, 0, '', 420, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 43200, -1, 2520, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 0, '', '', 0, 0, 0, 0, 0, 0),
+(1, 'GOD OTserv', 3, 1, 8, 0, 185, 185, 4200, 44, 98, 15, 76, 128, 0, 0, 35, 35, 0, 100, 1, 0, 0, 0, '', 420, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 43200, -1, 2520, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 0, '', '', 0, 0, 0, 0, 0, 0),
 (2, 'Rook Sample', 1, 1, 8, 0, 185, 185, 4200, 44, 98, 15, 76, 128, 0, 0, 35, 35, 0, 100, 1, 0, 0, 0, '', 420, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 43200, -1, 2520, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 0, '', '', 0, 0, 0, 0, 0, 0),
 (3, 'Sorcerer Sample', 1, 1, 8, 1, 185, 185, 4200, 44, 98, 15, 76, 128, 0, 0, 35, 35, 0, 100, 1, 0, 0, 0, '', 420, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 43200, -1, 2520, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 0, '', '', 0, 0, 0, 0, 0, 0),
 (4, 'Druid Sample', 1, 1, 8, 2, 185, 185, 4200, 44, 98, 15, 76, 128, 0, 0, 35, 35, 0, 100, 1, 0, 0, 0, '', 420, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 43200, -1, 2520, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 0, '', '', 0, 0, 0, 0, 0, 0),
@@ -1440,9 +1399,8 @@ INSERT INTO `players` (`id`, `name`, `group_id`, `account_id`, `level`, `vocatio
 (6, 'Knight Sample', 1, 1, 8, 4, 185, 185, 4200, 44, 98, 15, 76, 128, 0, 0, 35, 35, 0, 100, 1, 0, 0, 0, '', 420, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 43200, -1, 2520, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 0, '', '', 0, 0, 0, 0, 0, 0);
 
 --
--- Gatilhos `players`
+-- Triggers `players`
 --
-DROP TRIGGER IF EXISTS `ondelete_players`;
 DELIMITER //
 CREATE TRIGGER `ondelete_players` BEFORE DELETE ON `players`
  FOR EACH ROW BEGIN
@@ -1454,42 +1412,17 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `players_online`
+-- Table structure for table `players_online`
 --
 
 CREATE TABLE IF NOT EXISTS `players_online` (
-  `player_id` int(11) NOT NULL,
-  PRIMARY KEY (`player_id`)
+  `player_id` int(11) NOT NULL
 ) ENGINE=MEMORY DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `players_online`
---
-
-INSERT INTO `players_online` (`player_id`) VALUES
-(516),
-(434),
-(513),
-(414),
-(388),
-(387),
-(421),
-(502),
-(499),
-(409),
-(487),
-(506),
-(386),
-(459),
-(406),
-(519),
-(413),
-(378);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_deaths`
+-- Table structure for table `player_deaths`
 --
 
 CREATE TABLE IF NOT EXISTS `player_deaths` (
@@ -1501,16 +1434,13 @@ CREATE TABLE IF NOT EXISTS `player_deaths` (
   `mostdamage_by` varchar(100) NOT NULL,
   `mostdamage_is_player` tinyint(1) NOT NULL DEFAULT '0',
   `unjustified` tinyint(1) NOT NULL DEFAULT '0',
-  `mostdamage_unjustified` tinyint(1) NOT NULL DEFAULT '0',
-  KEY `player_id` (`player_id`),
-  KEY `killed_by` (`killed_by`),
-  KEY `mostdamage_by` (`mostdamage_by`)
+  `mostdamage_unjustified` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_depotitems`
+-- Table structure for table `player_depotitems`
 --
 
 CREATE TABLE IF NOT EXISTS `player_depotitems` (
@@ -1519,14 +1449,13 @@ CREATE TABLE IF NOT EXISTS `player_depotitems` (
   `pid` int(11) NOT NULL DEFAULT '0',
   `itemtype` smallint(6) NOT NULL,
   `count` smallint(5) NOT NULL DEFAULT '0',
-  `attributes` blob NOT NULL,
-  UNIQUE KEY `player_id_2` (`player_id`,`sid`)
+  `attributes` blob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_inboxitems`
+-- Table structure for table `player_inboxitems`
 --
 
 CREATE TABLE IF NOT EXISTS `player_inboxitems` (
@@ -1535,14 +1464,13 @@ CREATE TABLE IF NOT EXISTS `player_inboxitems` (
   `pid` int(11) NOT NULL DEFAULT '0',
   `itemtype` smallint(6) NOT NULL,
   `count` smallint(5) NOT NULL DEFAULT '0',
-  `attributes` blob NOT NULL,
-  UNIQUE KEY `player_id_2` (`player_id`,`sid`)
+  `attributes` blob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_items`
+-- Table structure for table `player_items`
 --
 
 CREATE TABLE IF NOT EXISTS `player_items` (
@@ -1551,65 +1479,58 @@ CREATE TABLE IF NOT EXISTS `player_items` (
   `sid` int(11) NOT NULL DEFAULT '0',
   `itemtype` smallint(6) NOT NULL DEFAULT '0',
   `count` smallint(5) NOT NULL DEFAULT '0',
-  `attributes` blob NOT NULL,
-  KEY `player_id` (`player_id`),
-  KEY `sid` (`sid`)
+  `attributes` blob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_namelocks`
+-- Table structure for table `player_namelocks`
 --
 
 CREATE TABLE IF NOT EXISTS `player_namelocks` (
   `player_id` int(11) NOT NULL,
   `reason` varchar(255) NOT NULL,
   `namelocked_at` bigint(20) NOT NULL,
-  `namelocked_by` int(11) NOT NULL,
-  PRIMARY KEY (`player_id`),
-  KEY `namelocked_by` (`namelocked_by`)
+  `namelocked_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_spells`
+-- Table structure for table `player_spells`
 --
 
 CREATE TABLE IF NOT EXISTS `player_spells` (
   `player_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  KEY `player_id` (`player_id`)
+  `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `player_storage`
+-- Table structure for table `player_storage`
 --
 
 CREATE TABLE IF NOT EXISTS `player_storage` (
   `player_id` int(11) NOT NULL DEFAULT '0',
   `key` int(10) unsigned NOT NULL DEFAULT '0',
-  `value` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`player_id`,`key`)
+  `value` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `server_config`
+-- Table structure for table `server_config`
 --
 
 CREATE TABLE IF NOT EXISTS `server_config` (
   `config` varchar(50) NOT NULL,
-  `value` varchar(256) NOT NULL DEFAULT '',
-  PRIMARY KEY (`config`)
+  `value` varchar(256) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `server_config`
+-- Dumping data for table `server_config`
 --
 
 INSERT INTO `server_config` (`config`, `value`) VALUES
@@ -1621,23 +1542,51 @@ INSERT INTO `server_config` (`config`, `value`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `tile_store`
+-- Table structure for table `tile_store`
 --
 
 CREATE TABLE IF NOT EXISTS `tile_store` (
   `house_id` int(11) NOT NULL,
-  `data` longblob NOT NULL,
-  KEY `house_id` (`house_id`)
+  `data` longblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `z_forum`
+-- Table structure for table `z_featured_article`
+--
+
+CREATE TABLE IF NOT EXISTS `z_featured_article` (
+`id` int(11) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `text` varchar(255) NOT NULL,
+  `date` varchar(30) NOT NULL,
+  `author` varchar(50) NOT NULL,
+  `read_more` varchar(100) NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `z_featured_article`
+--
+
+INSERT INTO `z_featured_article` (`id`, `title`, `text`, `date`, `author`, `read_more`) VALUES
+(1, 'Teste', '', '1404310665', 'Teste', 'teste'),
+(2, 'Novidades', '<p>Update em breve</p>', '1404320741', 'Teste', 'www.facebook.com'),
+(3, 'Bem vindo', '<p>TEstando com o Alex vamos que vamos</p>', '1404324978', 'Teste', 'index.php?subtopic=forum'),
+(4, 'Teste', '<p>teste aqui posta e aparece la compre no shop</p>', '1404327252', 'Teste', 'index.php?subtopic=shopsystem'),
+(5, 'Welcome', '<center><strong><span style="color: white; font-size: xx-small;">| IP:&nbsp;<span style="color: #0099ff;">hardcore-global.com</span>&nbsp;/ Port:&nbsp;<span style="color: #0099ff;">7171</span>&nbsp;/ Client:&nbsp;<span style="color: #0099ff;">10.41</span>', '1404327664', 'Teste', 'http://localhost/'),
+(6, '', '<center><strong><span style="color: white; font-size: xx-small;" data-mce-mark="1">| </span><span style="text-decoration: line-through;"><span style="color: white; font-size: xx-small; text-decoration: line-through;" data-mce-mark="1">IP</span></span><spa', '1404327728', 'Teste', 'http://localhost/'),
+(7, 'Teste', '<p>teste</p>', '1404327743', 'Teste', 'teste'),
+(8, 'Novo', '<p>teste novoa aqki mesmo site ficando bom</p>', '1404402200', 'Teste', 'index.php?subtopic=shopsystem');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `z_forum`
 --
 
 CREATE TABLE IF NOT EXISTS `z_forum` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `first_post` int(11) NOT NULL DEFAULT '0',
   `last_post` int(11) NOT NULL DEFAULT '0',
   `section` int(3) NOT NULL DEFAULT '0',
@@ -1652,33 +1601,79 @@ CREATE TABLE IF NOT EXISTS `z_forum` (
   `last_edit_aid` int(20) NOT NULL DEFAULT '0',
   `edit_date` int(20) NOT NULL DEFAULT '0',
   `post_ip` varchar(15) NOT NULL DEFAULT '0.0.0.0',
-  PRIMARY KEY (`id`),
-  KEY `section` (`section`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+  `icon_id` tinyint(4) NOT NULL DEFAULT '1',
+  `post_icon_id` tinyint(10) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `z_forum`
+-- Dumping data for table `z_forum`
 --
 
-INSERT INTO `z_forum` (`id`, `first_post`, `last_post`, `section`, `replies`, `views`, `author_aid`, `author_guid`, `post_text`, `post_topic`, `post_smile`, `post_date`, `last_edit_aid`, `edit_date`, `post_ip`) VALUES
-(4, 4, 1402926721, 1, 0, 39, 2, 7, '<center><h3>InformaÃ§Ãµes<h3></center>\r\n\r\nIP: www.warglobal.com.br\r\nPort: 7171\r\nVersÃ£o: 10.41\r\n\r\n# Quests:\r\nNew Outfit Jersey\r\nArena Quest\r\nAnihilator\r\nInquisition \r\nWarzones I, II, III\r\nNovos items 10.3+\r\nQuest Logs em vÃ¡rias quests\r\nRottin Wood Task\r\nBlood Brothers Quest\r\nYalahar Quest\r\nKilling In The Name Of...\r\nTumba Horestis\r\nTasks Commander Stone\r\nWrath of The Emperor\r\nE muito mais....\r\n\r\n# CaracterÃ­sticas:\r\nSem lag, possuÃ­mos um super dedicado, com Ã³timo ping.\r\nWar System, Top Fragers e etc...\r\nMapa global 10.41 impecÃ¡vel com atÃ© 98% completo.\r\nContÃ©m praticamente todas as quests do Tibia RL.\r\nRecompensas por level 40 ate 150!\r\nPossuÃ­mos vÃ¡rios eventos/invasÃµes semanais.\r\nSomente Spear Infinita.\r\nPot e Runas acabando.\r\nBrowse Field, Brasoes de Guild e NPC Icones.\r\nE muito mais....\r\n\r\n# Rates:\r\nExp: 150x (Stages)\r\nMagic: 10x\r\nSkill: 25x\r\nLoot: 4x\r\n\r\nNÃ£o perca mais seu tempo procurando por ae!\r\nVenha jÃ¡ crie sua account e faÃ§a parte dessa grande famÃ­lia.', 'Welcome!!', 0, 1402926721, 2, 1403553137, '177.84.236.106'),
-(7, 7, 1403562568, 5, 1, 8, 337, 413, 'cade o rashid nao ta do lado do dp de (thais) ou em cima do dp de (edron) igual no global', 'rashid', 0, 1403396561, 0, 0, '179.235.190.73'),
-(8, 8, 1403562534, 5, 1, 7, 359, 433, 'bom seu serve Ã© muito bom  tem tudo pra ser um dos melhores  sÃ³ peÃ§o que nÃ£o resete mais  divulgarei o serve e nÃ£o pedirei nada em troca sÃ³ que vc se comprometa a nÃ£o resetar pois o ot Ã© muito bom obrigada by matheus gomes', 'best', 0, 1403506489, 0, 0, '187.105.66.115'),
-(9, 9, 1403508833, 3, 0, 9, 359, 433, 'Primeira Anihhilator Feita Por Gomes Killer -etc', 'Anihhilator', 0, 1403508833, 0, 0, '187.105.66.115'),
-(10, 10, 1403562307, 5, 2, 9, 362, 436, 'A warzone so da pra entrar na 1 tentei entrar na 3 e na 2 n consegui e to querendo dropar wand of defiance mas n consigo por causa da warzone tomara q arrume ...', 'Warzone', 1, 1403559180, 0, 0, '177.183.244.220'),
-(11, 10, 0, 5, 0, 0, 2, 7, 'vou corrigir esquecemos de alterar o storage.', '', 0, 1403561182, 0, 0, '179.252.33.222'),
-(12, 10, 0, 5, 0, 0, 2, 7, 'Corrigido, storage alterado para os corretos.', '', 0, 1403562307, 0, 0, '179.252.36.111'),
-(13, 8, 0, 5, 0, 0, 2, 7, 'Obg pelos elogios vamos fazer o impossÃ­vel para manter a qualidade do ot e a boa estrutura.', '', 0, 1403562534, 0, 0, '179.252.36.111'),
-(14, 7, 0, 5, 0, 0, 2, 7, 'DP de thais do lado do Banco', '', 0, 1403562568, 0, 0, '179.252.36.111');
+INSERT INTO `z_forum` (`id`, `first_post`, `last_post`, `section`, `replies`, `views`, `author_aid`, `author_guid`, `post_text`, `post_topic`, `post_smile`, `post_date`, `last_edit_aid`, `edit_date`, `post_ip`, `icon_id`, `post_icon_id`) VALUES
+(19, 19, 1404317870, 1, 0, 0, 448, 520, '<p>Baixaki e pros fracos</p>', 'Facebook', 0, 1404317870, 0, 0, '127.0.0.1', 0, 0),
+(20, 20, 1404318004, 1, 0, 0, 448, 520, '<p>Teste</p>', 'Vamos', 0, 1404318004, 0, 0, '127.0.0.1', 0, 0),
+(21, 21, 1404320692, 1, 0, 0, 448, 520, '<p>Nossa senhora que site lindo</p>', 'Olalaa', 0, 1404320692, 0, 0, '127.0.0.1', 0, 0),
+(22, 22, 1404325124, 1, 0, 2, 448, 520, 'Alex esse e o site finalizado.', 'Alex', 0, 1404325124, 448, 1404325146, '127.0.0.1', 0, 0),
+(23, 23, 1404325157, 1, 0, 0, 448, 520, '<p>Alex</p>', 'Alex', 0, 1404325157, 0, 0, '127.0.0.1', 0, 0),
+(24, 24, 1404327148, 1, 0, 0, 448, 520, '<p>Allaannn</p>', 'Allan', 0, 1404327148, 0, 0, '127.0.0.1', 0, 0),
+(25, 25, 1404402118, 1, 0, 0, 448, 520, '<p>Tio teste</p>', 'Teste', 0, 1404402118, 0, 0, '127.0.0.1', 0, 0);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `z_ots_comunication`
+-- Table structure for table `z_network_box`
+--
+
+CREATE TABLE IF NOT EXISTS `z_network_box` (
+`id` int(11) NOT NULL,
+  `network_name` varchar(10) NOT NULL,
+  `network_link` varchar(50) NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `z_network_box`
+--
+
+INSERT INTO `z_network_box` (`id`, `network_name`, `network_link`) VALUES
+(1, 'facebook', 'tibia'),
+(2, 'twitter', 'warglobal');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `z_news_tickers`
+--
+
+CREATE TABLE IF NOT EXISTS `z_news_tickers` (
+  `date` int(11) NOT NULL DEFAULT '1',
+  `author` int(11) NOT NULL,
+  `image_id` int(3) NOT NULL DEFAULT '0',
+  `text` text NOT NULL,
+  `hide_ticker` tinyint(1) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `z_news_tickers`
+--
+
+INSERT INTO `z_news_tickers` (`date`, `author`, `image_id`, `text`, `hide_ticker`) VALUES
+(1404305931, 1, 0, 'teste', 1),
+(1404307538, 448, 0, 'teste', 0),
+(1404307594, 448, 0, 'teste', 0),
+(1404310545, 448, 0, 'asdasdsad', 0),
+(1404320838, 448, 0, 'Bem vindo so otss', 0),
+(1404324997, 448, 0, 'esasd a4sd615612as d', 0),
+(1404327133, 448, 0, 'tstes', 0),
+(1404402125, 448, 0, 'rteste', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `z_ots_comunication`
 --
 
 CREATE TABLE IF NOT EXISTS `z_ots_comunication` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `type` varchar(255) NOT NULL,
   `action` varchar(255) NOT NULL,
@@ -1689,18 +1684,62 @@ CREATE TABLE IF NOT EXISTS `z_ots_comunication` (
   `param5` varchar(255) NOT NULL,
   `param6` varchar(255) NOT NULL,
   `param7` varchar(255) NOT NULL,
-  `delete_it` int(2) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+  `delete_it` int(2) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `z_shop_history_item`
+-- Table structure for table `z_polls`
+--
+
+CREATE TABLE IF NOT EXISTS `z_polls` (
+`id` int(11) NOT NULL,
+  `question` varchar(255) NOT NULL,
+  `end` int(11) NOT NULL,
+  `start` int(11) NOT NULL,
+  `answers` int(11) NOT NULL,
+  `votes_all` int(11) NOT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `z_polls`
+--
+
+INSERT INTO `z_polls` (`id`, `question`, `end`, `start`, `answers`, `votes_all`) VALUES
+(1, 'Teste', 1404586405, 1404327205, 2, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `z_polls_answers`
+--
+
+CREATE TABLE IF NOT EXISTS `z_polls_answers` (
+  `poll_id` int(11) NOT NULL,
+  `answer_id` int(11) NOT NULL,
+  `answer` varchar(255) NOT NULL,
+  `votes` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `z_polls_answers`
+--
+
+INSERT INTO `z_polls_answers` (`poll_id`, `answer_id`, `answer`, `votes`) VALUES
+(1, 1, 'sim', 0),
+(1, 2, 'nao', 0),
+(1, 1, 'sim', 0),
+(1, 2, 'nao', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `z_shop_history_item`
 --
 
 CREATE TABLE IF NOT EXISTS `z_shop_history_item` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `to_name` varchar(255) NOT NULL DEFAULT '0',
   `to_account` int(11) NOT NULL DEFAULT '0',
   `from_nick` varchar(255) NOT NULL,
@@ -1709,26 +1748,17 @@ CREATE TABLE IF NOT EXISTS `z_shop_history_item` (
   `offer_id` varchar(255) NOT NULL DEFAULT '',
   `trans_state` varchar(255) NOT NULL,
   `trans_start` int(11) NOT NULL DEFAULT '0',
-  `trans_real` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Extraindo dados da tabela `z_shop_history_item`
---
-
-INSERT INTO `z_shop_history_item` (`id`, `to_name`, `to_account`, `from_nick`, `from_account`, `price`, `offer_id`, `trans_state`, `trans_start`, `trans_real`) VALUES
-(1, 'GOD Any', 2, 'Anonymous', 2, 10, 'teste', 'realized', 1402345975, 1403530780),
-(2, 'GOD Any', 2, 'Anonymous', 2, 4, 'Blade of Corruption', 'realized', 1403530771, 1403530780);
+  `trans_real` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `z_shop_offer`
+-- Table structure for table `z_shop_offer`
 --
 
 CREATE TABLE IF NOT EXISTS `z_shop_offer` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `points` int(11) NOT NULL DEFAULT '0',
   `itemid1` int(11) NOT NULL DEFAULT '0',
   `count1` int(11) NOT NULL DEFAULT '0',
@@ -1736,226 +1766,444 @@ CREATE TABLE IF NOT EXISTS `z_shop_offer` (
   `count2` int(11) NOT NULL DEFAULT '0',
   `offer_type` varchar(255) DEFAULT NULL,
   `offer_description` text NOT NULL,
-  `offer_name` varchar(255) NOT NULL,
-  `pid` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=82 ;
+  `offer_name` varchar(255) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
--- Extraindo dados da tabela `z_shop_offer`
+-- Dumping data for table `z_shop_offer`
 --
 
-INSERT INTO `z_shop_offer` (`id`, `points`, `itemid1`, `count1`, `itemid2`, `count2`, `offer_type`, `offer_description`, `offer_name`, `pid`) VALUES
-(2, 4, 12649, 1, 0, 0, 'item', 'Blade of Corruption', 'Blade of Corruption', 0),
-(3, 4, 2160, 100, 0, 0, 'item', '100 Crystal Coin', '100 Crystal Coin', 0),
-(4, 5, 8927, 1, 0, 0, 'item', 'Dark Trinity Mace', 'Dark Trinity Mace', 0),
-(5, 4, 2494, 1, 0, 0, 'item', 'Demon Armor', 'Demon Armor', 0),
-(6, 4, 2495, 1, 0, 0, 'item', 'Demon Legs', 'Demon Legs', 0),
-(7, 8, 15410, 1, 0, 0, 'item', 'Depth Calcei', 'Depth Calcei', 0),
-(8, 8, 15408, 1, 0, 0, 'item', 'Depth Galea', 'Depth Galea', 0),
-(9, 8, 15407, 1, 0, 0, 'item', 'Depth Lorica', 'Depth Lorica', 0),
-(10, 8, 15409, 1, 0, 0, 'item', 'Depth Ocrea', 'Depth Ocrea', 0),
-(11, 6, 15411, 1, 0, 0, 'item', 'Depth Scutum', 'Depth Scutum', 0),
-(12, 2, 2472, 1, 0, 0, 'item', 'Magic Plate Armor', 'Magic Plate Armor', 0),
-(13, 4, 2646, 1, 0, 0, 'item', 'Golden Boots', 'Golden Boots', 0),
-(14, 8, 2471, 1, 0, 0, 'item', 'Golden Helmet', 'Golden Helmet', 0),
-(15, 4, 12642, 4, 0, 0, 'item', 'Royal Draken Mail', 'Royal Draken Mail', 0),
-(16, 4, 12643, 1, 0, 0, 'item', 'Royal Scale Robe', 'Royal Scale Robe', 0),
-(17, 4, 12645, 1, 0, 0, 'item', 'Elite Draken Helmet', 'Elite Draken Helmet', 0),
-(18, 5, 18465, 1, 0, 0, 'item', 'Shiny Blade', 'Shiny Blade', 0),
-(19, 5, 8884, 1, 0, 0, 'item', 'Oceanborn Leviathan Armor', 'Oceanborn Leviathan Armor', 0),
-(20, 5, 8882, 1, 0, 0, 'item', 'Earthborn Titan Armor', 'Earthborn Titan Armor', 0),
-(21, 5, 8883, 1, 0, 0, 'item', 'Windborn Colossus Armor', 'Windborn Colossus Armor', 0),
-(22, 7, 2640, 1, 0, 0, 'item', 'Soft Boots', 'Soft Boots', 0),
-(23, 5, 8878, 1, 0, 0, 'item', 'Crystalline Armor', 'Crystalline Armor', 0),
-(24, 5, 8888, 1, 0, 0, 'item', 'Master Archer''s Armor', 'Master Archer''s Armor', 0),
-(25, 5, 18452, 1, 0, 0, 'item', 'Mycological Mace', 'Mycological Mace', 0),
-(26, 5, 8851, 1, 0, 0, 'item', 'Royal Crossbow', 'Royal Crossbow', 0),
-(27, 5, 22398, 1, 0, 0, 'item', 'Crude Umbral Blade', 'Crude Umbral Blade', 0),
-(28, 7, 22399, 1, 0, 0, 'item', 'Umbral Blade', 'Umbral Blade', 0),
-(29, 10, 22400, 1, 0, 0, 'item', 'Umbral Masterblade', 'Umbral Masterblade', 0),
-(30, 3, 22401, 1, 0, 0, 'item', 'Crude Umbral Slayer', 'Crude Umbral Slayer', 0),
-(31, 5, 22402, 1, 0, 0, 'item', 'Umbral Slayer', 'Umbral Slayer', 0),
-(32, 10, 22403, 1, 0, 0, 'item', 'Umbral Master Slayer', 'Umbral Master Slayer', 0),
-(33, 5, 22404, 1, 0, 0, 'item', 'Crude Umbral Axe', 'Crude Umbral Axe', 0),
-(34, 7, 22405, 1, 0, 0, 'item', 'Umbral Axe', 'Umbral Axe', 0),
-(35, 10, 22406, 1, 0, 0, 'item', 'Umbral Master Axe', 'Umbral Master Axe', 0),
-(36, 3, 22407, 1, 0, 0, 'item', 'Crude Umbral Chopper', 'Crude Umbral Chopper', 0),
-(37, 5, 22408, 1, 0, 0, 'item', 'Umbral Chopper', 'Umbral Chopper', 0),
-(38, 8, 22409, 1, 0, 0, 'item', 'Umbral Master Chopper', 'Umbral Master Chopper', 0),
-(39, 5, 22410, 1, 0, 0, 'item', 'Crude Umbral Mace', 'Crude Umbral Mace', 0),
-(40, 7, 22411, 1, 0, 0, 'item', 'Umbral Mace', 'Umbral Mace', 0),
-(41, 10, 22412, 1, 0, 0, 'item', 'Umbral Master Mace', 'Umbral Master Mace', 0),
-(42, 3, 22413, 1, 0, 0, 'item', 'Crude Umbral Hammer', 'Crude Umbral Hammer', 0),
-(43, 5, 22414, 1, 0, 0, 'item', 'Umbral Hammer', 'Umbral Hammer', 0),
-(44, 8, 22415, 1, 0, 0, 'item', 'Umbral Master Hammer', 'Umbral Master Hammer', 0),
-(45, 3, 22416, 1, 0, 0, 'item', 'Crude Umbral Bow', 'Crude Umbral Bow', 0),
-(46, 5, 22417, 1, 0, 0, 'item', 'Umbral Bow', 'Umbral Bow', 0),
-(47, 10, 22418, 1, 0, 0, 'item', 'Umbral Master Bow', 'Umbral Master Bow', 0),
-(48, 3, 22419, 1, 0, 0, 'item', 'Crude Umbral Crossbow', 'Crude Umbral Crossbow', 0),
-(49, 5, 22420, 1, 0, 0, 'item', 'Umbral Crossbow', 'Umbral Crossbow', 0),
-(50, 10, 22421, 1, 0, 0, 'item', 'Umbral Master Crossbow', 'Umbral Master Crossbow', 0),
-(51, 3, 22422, 1, 0, 0, 'item', 'Crude Umbral Spellbook', 'Crude Umbral Spellbook', 0),
-(52, 5, 22423, 1, 0, 0, 'item', 'Umbral Spellbook', 'Umbral Spellbook', 0),
-(53, 10, 22424, 1, 0, 0, 'item', 'Umbral Master Spellbook', 'Umbral Master Spellbook', 0),
-(54, 7, 16111, 1, 0, 0, 'item', 'Thorn Spitter', 'Thorn Spitter', 0),
-(55, 10, 2523, 1, 0, 0, 'item', 'Blessed Shield', 'Blessed Shield', 0),
-(56, 5, 12644, 1, 0, 0, 'item', 'Shield of Corruption', 'Shield of Corruption', 0),
-(57, 4, 15413, 1, 0, 0, 'item', 'Ornate Shield', 'Ornate Shield', 0),
-(58, 5, 6391, 1, 0, 0, 'item', 'Nightmare Shield', 'Nightmare Shield', 0),
-(59, 6, 6433, 1, 0, 0, 'item', 'Necromancer Shield', 'Necromancer Shield', 0),
-(60, 6, 18410, 1, 0, 0, 'item', 'Prismatic Shield', 'Prismatic Shield', 0),
-(61, 5, 8918, 1, 0, 0, 'item', 'Spellbook of Dark Mysteries', 'Spellbook of Dark Mysteries', 0),
-(62, 7, 18422, 20, 0, 0, 'item', '20x Minor Crystalline Token', '20x Minor Crystalline Token', 0),
-(63, 10, 18423, 20, 0, 0, 'item', '20x Major Crystalline Token', '20x Major Crystalline Token', 0),
-(64, 7, 8925, 1, 0, 0, 'item', 'Solar Axe', 'Solar Axe', 0),
-(65, 4, 9777, 1, 0, 0, 'item', 'Yalahari Legs Piece', 'Yalahari Legs Piece', 0),
-(66, 4, 9776, 1, 0, 0, 'item', 'Yalahari Armor', 'Yalahari Armor', 0),
-(67, 4, 9778, 1, 0, 0, 'item', 'Yalahari Mask', 'Yalahari Mask', 0),
-(68, 4, 10146, 10, 0, 0, 'item', '10 Blood Herb', '10 Blood Herb', 0),
-(70, 8, 2504, 1, 0, 0, 'item', 'Dwarven Legs', 'Dwarven Legs', 0),
-(71, 8, 2503, 1, 0, 0, 'item', 'Dwarven Armor', 'Dwarven Armor', 0),
-(78, 5, 2366, 1, 0, 0, 'item', '1x Stamina Refill', '1x Stamina Refill', 0),
-(79, 30, 16101, 1, 0, 0, 'item', 'vale 30 pontos.', 'Premium Scroll', 0),
-(80, 30, 9693, 1, 0, 0, 'item', '1x Addon Doll use !addon nameofaddon', '1x Addon Doll', 0),
-(81, 20, 9019, 1, 0, 0, 'item', '1x Mount Doll use !mount nameofmount', '1x Mount Doll', 0);
+INSERT INTO `z_shop_offer` (`id`, `points`, `itemid1`, `count1`, `itemid2`, `count2`, `offer_type`, `offer_description`, `offer_name`) VALUES
+(1, 20, 2453, 1, 0, 0, 'item', 'Arrow para paladin', 'Arrow'),
+(2, 20, 2160, 100, 0, 0, 'item', 'teste', 'teste');
 
 --
--- Restrições para as tabelas dumpadas
+-- Indexes for dumped tables
 --
 
 --
--- Restrições para a tabela `account_bans`
+-- Indexes for table `accounts`
+--
+ALTER TABLE `accounts`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indexes for table `account_bans`
 --
 ALTER TABLE `account_bans`
-  ADD CONSTRAINT `account_bans_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `account_bans_ibfk_2` FOREIGN KEY (`banned_by`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ ADD PRIMARY KEY (`account_id`), ADD KEY `banned_by` (`banned_by`);
 
 --
--- Restrições para a tabela `account_ban_history`
+-- Indexes for table `account_ban_history`
 --
 ALTER TABLE `account_ban_history`
-  ADD CONSTRAINT `account_ban_history_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `account_ban_history_ibfk_2` FOREIGN KEY (`banned_by`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ ADD PRIMARY KEY (`id`), ADD KEY `account_id` (`account_id`), ADD KEY `banned_by` (`banned_by`);
 
 --
--- Restrições para a tabela `account_viplist`
+-- Indexes for table `account_viplist`
 --
 ALTER TABLE `account_viplist`
-  ADD CONSTRAINT `account_viplist_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `account_viplist_ibfk_2` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
+ ADD UNIQUE KEY `account_player_index` (`account_id`,`player_id`), ADD KEY `player_id` (`player_id`);
 
 --
--- Restrições para a tabela `guilds`
+-- Indexes for table `guilds`
 --
 ALTER TABLE `guilds`
-  ADD CONSTRAINT `guilds_ibfk_1` FOREIGN KEY (`ownerid`) REFERENCES `players` (`id`) ON DELETE CASCADE;
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `name` (`name`), ADD UNIQUE KEY `ownerid` (`ownerid`);
 
 --
--- Restrições para a tabela `guildwar_kills`
+-- Indexes for table `guildwar_kills`
 --
 ALTER TABLE `guildwar_kills`
-  ADD CONSTRAINT `guildwar_kills_ibfk_1` FOREIGN KEY (`warid`) REFERENCES `guild_wars` (`id`) ON DELETE CASCADE;
+ ADD PRIMARY KEY (`id`), ADD KEY `warid` (`warid`);
 
 --
--- Restrições para a tabela `guild_invites`
+-- Indexes for table `guild_invites`
 --
 ALTER TABLE `guild_invites`
-  ADD CONSTRAINT `guild_invites_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `guild_invites_ibfk_2` FOREIGN KEY (`guild_id`) REFERENCES `guilds` (`id`) ON DELETE CASCADE;
+ ADD PRIMARY KEY (`player_id`,`guild_id`), ADD KEY `guild_id` (`guild_id`);
 
 --
--- Restrições para a tabela `guild_membership`
+-- Indexes for table `guild_membership`
 --
 ALTER TABLE `guild_membership`
-  ADD CONSTRAINT `guild_membership_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `guild_membership_ibfk_2` FOREIGN KEY (`guild_id`) REFERENCES `guilds` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `guild_membership_ibfk_3` FOREIGN KEY (`rank_id`) REFERENCES `guild_ranks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ ADD PRIMARY KEY (`player_id`), ADD KEY `guild_id` (`guild_id`), ADD KEY `rank_id` (`rank_id`);
 
 --
--- Restrições para a tabela `guild_ranks`
+-- Indexes for table `guild_ranks`
 --
 ALTER TABLE `guild_ranks`
-  ADD CONSTRAINT `guild_ranks_ibfk_1` FOREIGN KEY (`guild_id`) REFERENCES `guilds` (`id`) ON DELETE CASCADE;
+ ADD PRIMARY KEY (`id`), ADD KEY `guild_id` (`guild_id`);
 
 --
--- Restrições para a tabela `house_lists`
+-- Indexes for table `guild_wars`
+--
+ALTER TABLE `guild_wars`
+ ADD PRIMARY KEY (`id`), ADD KEY `guild1` (`guild1`), ADD KEY `guild2` (`guild2`);
+
+--
+-- Indexes for table `houses`
+--
+ALTER TABLE `houses`
+ ADD PRIMARY KEY (`id`), ADD KEY `owner` (`owner`), ADD KEY `town_id` (`town_id`);
+
+--
+-- Indexes for table `house_lists`
 --
 ALTER TABLE `house_lists`
-  ADD CONSTRAINT `house_lists_ibfk_1` FOREIGN KEY (`house_id`) REFERENCES `houses` (`id`) ON DELETE CASCADE;
+ ADD KEY `house_id` (`house_id`);
 
 --
--- Restrições para a tabela `ip_bans`
+-- Indexes for table `ip_bans`
 --
 ALTER TABLE `ip_bans`
-  ADD CONSTRAINT `ip_bans_ibfk_1` FOREIGN KEY (`banned_by`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ ADD PRIMARY KEY (`ip`), ADD KEY `banned_by` (`banned_by`);
 
 --
--- Restrições para a tabela `market_history`
+-- Indexes for table `market_history`
 --
 ALTER TABLE `market_history`
-  ADD CONSTRAINT `market_history_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
+ ADD PRIMARY KEY (`id`), ADD KEY `player_id` (`player_id`,`sale`);
 
 --
--- Restrições para a tabela `market_offers`
+-- Indexes for table `market_offers`
 --
 ALTER TABLE `market_offers`
-  ADD CONSTRAINT `market_offers_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
+ ADD PRIMARY KEY (`id`), ADD KEY `sale` (`sale`,`itemtype`), ADD KEY `created` (`created`), ADD KEY `player_id` (`player_id`);
 
 --
--- Restrições para a tabela `players`
+-- Indexes for table `players`
 --
 ALTER TABLE `players`
-  ADD CONSTRAINT `players_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE;
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `name` (`name`), ADD KEY `account_id` (`account_id`), ADD KEY `vocation` (`vocation`);
 
 --
--- Restrições para a tabela `player_deaths`
+-- Indexes for table `players_online`
+--
+ALTER TABLE `players_online`
+ ADD PRIMARY KEY (`player_id`);
+
+--
+-- Indexes for table `player_deaths`
 --
 ALTER TABLE `player_deaths`
-  ADD CONSTRAINT `player_deaths_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
+ ADD KEY `player_id` (`player_id`), ADD KEY `killed_by` (`killed_by`), ADD KEY `mostdamage_by` (`mostdamage_by`);
 
 --
--- Restrições para a tabela `player_depotitems`
+-- Indexes for table `player_depotitems`
 --
 ALTER TABLE `player_depotitems`
-  ADD CONSTRAINT `player_depotitems_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
+ ADD UNIQUE KEY `player_id_2` (`player_id`,`sid`);
 
 --
--- Restrições para a tabela `player_inboxitems`
+-- Indexes for table `player_inboxitems`
 --
 ALTER TABLE `player_inboxitems`
-  ADD CONSTRAINT `player_inboxitems_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
+ ADD UNIQUE KEY `player_id_2` (`player_id`,`sid`);
 
 --
--- Restrições para a tabela `player_items`
+-- Indexes for table `player_items`
 --
 ALTER TABLE `player_items`
-  ADD CONSTRAINT `player_items_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
+ ADD KEY `player_id` (`player_id`), ADD KEY `sid` (`sid`);
 
 --
--- Restrições para a tabela `player_namelocks`
+-- Indexes for table `player_namelocks`
 --
 ALTER TABLE `player_namelocks`
-  ADD CONSTRAINT `player_namelocks_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `player_namelocks_ibfk_2` FOREIGN KEY (`namelocked_by`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ ADD PRIMARY KEY (`player_id`), ADD KEY `namelocked_by` (`namelocked_by`);
 
 --
--- Restrições para a tabela `player_spells`
+-- Indexes for table `player_spells`
 --
 ALTER TABLE `player_spells`
-  ADD CONSTRAINT `player_spells_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
+ ADD KEY `player_id` (`player_id`);
 
 --
--- Restrições para a tabela `player_storage`
+-- Indexes for table `player_storage`
 --
 ALTER TABLE `player_storage`
-  ADD CONSTRAINT `player_storage_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
+ ADD PRIMARY KEY (`player_id`,`key`);
 
 --
--- Restrições para a tabela `tile_store`
+-- Indexes for table `server_config`
+--
+ALTER TABLE `server_config`
+ ADD PRIMARY KEY (`config`);
+
+--
+-- Indexes for table `tile_store`
 --
 ALTER TABLE `tile_store`
-  ADD CONSTRAINT `tile_store_ibfk_1` FOREIGN KEY (`house_id`) REFERENCES `houses` (`id`) ON DELETE CASCADE;
+ ADD KEY `house_id` (`house_id`);
+
+--
+-- Indexes for table `z_featured_article`
+--
+ALTER TABLE `z_featured_article`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `z_forum`
+--
+ALTER TABLE `z_forum`
+ ADD PRIMARY KEY (`id`), ADD KEY `section` (`section`);
+
+--
+-- Indexes for table `z_network_box`
+--
+ALTER TABLE `z_network_box`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `z_ots_comunication`
+--
+ALTER TABLE `z_ots_comunication`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `z_polls`
+--
+ALTER TABLE `z_polls`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `z_shop_history_item`
+--
+ALTER TABLE `z_shop_history_item`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `z_shop_offer`
+--
+ALTER TABLE `z_shop_offer`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `accounts`
+--
+ALTER TABLE `accounts`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=449;
+--
+-- AUTO_INCREMENT for table `account_ban_history`
+--
+ALTER TABLE `account_ban_history`
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `guilds`
+--
+ALTER TABLE `guilds`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `guildwar_kills`
+--
+ALTER TABLE `guildwar_kills`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `guild_ranks`
+--
+ALTER TABLE `guild_ranks`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `guild_wars`
+--
+ALTER TABLE `guild_wars`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `houses`
+--
+ALTER TABLE `houses`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2423;
+--
+-- AUTO_INCREMENT for table `market_history`
+--
+ALTER TABLE `market_history`
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `market_offers`
+--
+ALTER TABLE `market_offers`
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `players`
+--
+ALTER TABLE `players`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=524;
+--
+-- AUTO_INCREMENT for table `z_featured_article`
+--
+ALTER TABLE `z_featured_article`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `z_forum`
+--
+ALTER TABLE `z_forum`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
+--
+-- AUTO_INCREMENT for table `z_network_box`
+--
+ALTER TABLE `z_network_box`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `z_ots_comunication`
+--
+ALTER TABLE `z_ots_comunication`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `z_polls`
+--
+ALTER TABLE `z_polls`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `z_shop_history_item`
+--
+ALTER TABLE `z_shop_history_item`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `z_shop_offer`
+--
+ALTER TABLE `z_shop_offer`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `account_bans`
+--
+ALTER TABLE `account_bans`
+ADD CONSTRAINT `account_bans_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `account_bans_ibfk_2` FOREIGN KEY (`banned_by`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `account_ban_history`
+--
+ALTER TABLE `account_ban_history`
+ADD CONSTRAINT `account_ban_history_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `account_ban_history_ibfk_2` FOREIGN KEY (`banned_by`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `account_viplist`
+--
+ALTER TABLE `account_viplist`
+ADD CONSTRAINT `account_viplist_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE,
+ADD CONSTRAINT `account_viplist_ibfk_2` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `guilds`
+--
+ALTER TABLE `guilds`
+ADD CONSTRAINT `guilds_ibfk_1` FOREIGN KEY (`ownerid`) REFERENCES `players` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `guildwar_kills`
+--
+ALTER TABLE `guildwar_kills`
+ADD CONSTRAINT `guildwar_kills_ibfk_1` FOREIGN KEY (`warid`) REFERENCES `guild_wars` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `guild_invites`
+--
+ALTER TABLE `guild_invites`
+ADD CONSTRAINT `guild_invites_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE,
+ADD CONSTRAINT `guild_invites_ibfk_2` FOREIGN KEY (`guild_id`) REFERENCES `guilds` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `guild_membership`
+--
+ALTER TABLE `guild_membership`
+ADD CONSTRAINT `guild_membership_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `guild_membership_ibfk_2` FOREIGN KEY (`guild_id`) REFERENCES `guilds` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `guild_membership_ibfk_3` FOREIGN KEY (`rank_id`) REFERENCES `guild_ranks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `guild_ranks`
+--
+ALTER TABLE `guild_ranks`
+ADD CONSTRAINT `guild_ranks_ibfk_1` FOREIGN KEY (`guild_id`) REFERENCES `guilds` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `house_lists`
+--
+ALTER TABLE `house_lists`
+ADD CONSTRAINT `house_lists_ibfk_1` FOREIGN KEY (`house_id`) REFERENCES `houses` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `ip_bans`
+--
+ALTER TABLE `ip_bans`
+ADD CONSTRAINT `ip_bans_ibfk_1` FOREIGN KEY (`banned_by`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `market_history`
+--
+ALTER TABLE `market_history`
+ADD CONSTRAINT `market_history_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `market_offers`
+--
+ALTER TABLE `market_offers`
+ADD CONSTRAINT `market_offers_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `players`
+--
+ALTER TABLE `players`
+ADD CONSTRAINT `players_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `player_deaths`
+--
+ALTER TABLE `player_deaths`
+ADD CONSTRAINT `player_deaths_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `player_depotitems`
+--
+ALTER TABLE `player_depotitems`
+ADD CONSTRAINT `player_depotitems_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `player_inboxitems`
+--
+ALTER TABLE `player_inboxitems`
+ADD CONSTRAINT `player_inboxitems_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `player_items`
+--
+ALTER TABLE `player_items`
+ADD CONSTRAINT `player_items_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `player_namelocks`
+--
+ALTER TABLE `player_namelocks`
+ADD CONSTRAINT `player_namelocks_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+ADD CONSTRAINT `player_namelocks_ibfk_2` FOREIGN KEY (`namelocked_by`) REFERENCES `players` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `player_spells`
+--
+ALTER TABLE `player_spells`
+ADD CONSTRAINT `player_spells_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `player_storage`
+--
+ALTER TABLE `player_storage`
+ADD CONSTRAINT `player_storage_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `tile_store`
+--
+ALTER TABLE `tile_store`
+ADD CONSTRAINT `tile_store_ibfk_1` FOREIGN KEY (`house_id`) REFERENCES `houses` (`id`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
