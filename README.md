@@ -7,3 +7,7 @@ The Forgotten Server is a free and open-source MMORPG server emulator written in
 
 * [Compiling](https://github.com/otland/forgottenserver/wiki/Compiling)
 * [Nightly Builds for Windows](http://nightlies.otland.net/)
+
+
+Mantido por www.serversoft.com.br
+http://www.serversoft.com.br/otserv-open-tibia-server-ots/
